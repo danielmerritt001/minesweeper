@@ -1,0 +1,1 @@
+Step 1: Create a board that I can click on. That board will have an amount of mines and not mines.
