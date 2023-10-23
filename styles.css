@@ -1,3 +1,15 @@
 h1 {
   color: blue;
 }
+
+.game-board {
+  width: 640px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.game-board div {
+  flex: 0 0 78px;
+  height: 78px;
+  border: 1px solid black;
+}
