@@ -13,3 +13,15 @@ h1 {
   height: 78px;
   border: 1px solid black;
 }
+
+.sq:hover {
+  background-color: gray;
+}
+
+.safe {
+  background-color: green;
+}
+
+.explode {
+  background-color: red;
+}

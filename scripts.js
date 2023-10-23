@@ -18,12 +18,13 @@ function init() {
     for (let i=0; i < width*width; i++) {
       let square = document.createElement("div")
       square.className = "sq"
+      square.setAttribute('id', i)
       gameBoard.append(square)
     }
     squares = document.querySelectorAll('.sq')
     plantMines()
     mineSquares.forEach(elem => {
-      squares[elem-1].className += " mine"
+      squares[elem].className += " mine"
     })
   } else if (currDifficulty == 'medium') {
     console.log(currDifficulty)
@@ -44,10 +45,41 @@ function plantMines() {
 
 function randomSquare() {
   let possibleSquare = Math.floor(Math.random()*64)
-  if (!mineSquares.includes(possibleSquare)) {
-    return possibleSquare
+  while (mineSquares.includes(possibleSquare)) {
+    possibleSquare = Math.floor(Math.random()*64)
   }
-  randomSquare()
+  return possibleSquare
 }
 
 // click functions
+
+gameBoard.addEventListener('click', test)
+
+function test() {
+  if (event.target.className == "sq") {
+    let nearbyMines = 0
+    event.target.className += " safe"
+    let squareId = +event.target.id
+    if(squares[squareId + 1] && squares[squareId + 1].className == "sq mine") {
+      console.log('right')
+      nearbyMines ++
+    }
+    if(squares[squareId - 1] && squares[squareId - 1].className == "sq mine") {
+      console.log('left')
+      nearbyMines ++
+    }
+    console.log(squares[squareId + 8])
+    if(squares[squareId + 8] && squares[squareId + 8].className == "sq mine") {
+      console.log('down')
+      nearbyMines ++
+    }
+    if(squares[squareId - 8] && squares[squareId - 8].className == "sq mine") {
+      console.log('up')
+      nearbyMines ++
+    }
+    event.target.innerHTML += nearbyMines
+  } else {
+    event.target.className += " explode"
+  }
+  console.log(event.target)
+}
