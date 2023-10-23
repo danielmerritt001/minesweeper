@@ -6,8 +6,10 @@ console.log(gameBoard)
 // constants
 let difficulty = ['easy', 'medium', 'hard']
 let currDifficulty = difficulty[0]
+let squares = []
+let mineSquares = []
 
-// functions
+// init function
 
 function init() {
   if (currDifficulty == 'easy') {
@@ -15,9 +17,14 @@ function init() {
     const width = 8
     for (let i=0; i < width*width; i++) {
       let square = document.createElement("div")
-      // console.log(square)
+      square.className = "sq"
       gameBoard.append(square)
     }
+    squares = document.querySelectorAll('.sq')
+    plantMines()
+    mineSquares.forEach(elem => {
+      squares[elem-1].className += " mine"
+    })
   } else if (currDifficulty == 'medium') {
     console.log(currDifficulty)
   } else {
@@ -26,3 +33,21 @@ function init() {
 }
 
 init()
+
+// mine function
+
+function plantMines() {
+  for (let i=0; i< 10; i++) {
+    mineSquares.push(randomSquare())
+  }
+}
+
+function randomSquare() {
+  let possibleSquare = Math.floor(Math.random()*64)
+  if (!mineSquares.includes(possibleSquare)) {
+    return possibleSquare
+  }
+  randomSquare()
+}
+
+// click functions
