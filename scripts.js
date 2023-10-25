@@ -55,20 +55,21 @@ function randomSquare() {
 
 gameBoard.addEventListener('click', test)
 
+// big function
+
 function test() {
   if (event.target.className == "sq") {
     let nearbyMines = 0
     event.target.className += " safe"
     let squareId = +event.target.id
-    if(squares[squareId + 1] && squares[squareId + 1].className == "sq mine") {
+    if(squares[squareId + 1] && squares[squareId + 1].className == "sq mine" && (squareId - 7) % 8) {
       console.log('right')
       nearbyMines ++
     }
-    if(squares[squareId - 1] && squares[squareId - 1].className == "sq mine") {
+    if(squares[squareId - 1] && squares[squareId - 1].className == "sq mine" && squareId % 8) {
       console.log('left')
       nearbyMines ++
     }
-    console.log(squares[squareId + 8])
     if(squares[squareId + 8] && squares[squareId + 8].className == "sq mine") {
       console.log('down')
       nearbyMines ++
@@ -77,9 +78,76 @@ function test() {
       console.log('up')
       nearbyMines ++
     }
+    if(squares[squareId -7] && squares[squareId -7].className == "sq mine" && (squareId - 7) % 8) {
+      console.log('up right')
+      nearbyMines ++
+    }
+    if(squares[squareId - 9] && squares[squareId - 9].className == "sq mine" && squareId % 8) {
+      console.log('up left')
+      nearbyMines ++
+    }
+    if(squares[squareId + 9] && squares[squareId + 9].className == "sq mine" && (squareId - 7) % 8) {
+      console.log('down right')
+      nearbyMines ++
+    }
+    if(squares[squareId + 7] && squares[squareId + 7].className == "sq mine" && squareId % 8) {
+      console.log('down left')
+      nearbyMines ++
+    }
     event.target.innerHTML += nearbyMines
-  } else {
+    if (nearbyMines == 0) {
+      //recursive function
+    }
+  } else if(event.target.className == "sq mine") {
     event.target.className += " explode"
   }
   console.log(event.target)
 }
+
+function recursiveTest(recSquare) {
+  if (recSquare.className == "sq") {
+    let nearbyMines = 0
+    recSquare.className += " safe"
+    let squareId = +recSquare.id
+    if(squares[squareId + 1] && squares[squareId + 1].className == "sq mine" && (squareId - 7) % 8) {
+      console.log('right')
+      nearbyMines ++
+    }
+    if(squares[squareId - 1] && squares[squareId - 1].className == "sq mine" && squareId % 8) {
+      console.log('left')
+      nearbyMines ++
+    }
+    if(squares[squareId + 8] && squares[squareId + 8].className == "sq mine") {
+      console.log('down')
+      nearbyMines ++
+    }
+    if(squares[squareId - 8] && squares[squareId - 8].className == "sq mine") {
+      console.log('up')
+      nearbyMines ++
+    }
+    if(squares[squareId -7] && squares[squareId -7].className == "sq mine" && (squareId - 7) % 8) {
+      console.log('up right')
+      nearbyMines ++
+    }
+    if(squares[squareId - 9] && squares[squareId - 9].className == "sq mine" && squareId % 8) {
+      console.log('up left')
+      nearbyMines ++
+    }
+    if(squares[squareId + 9] && squares[squareId + 9].className == "sq mine" && (squareId - 7) % 8) {
+      console.log('down right')
+      nearbyMines ++
+    }
+    if(squares[squareId + 7] && squares[squareId + 7].className == "sq mine" && squareId % 8) {
+      console.log('down left')
+      nearbyMines ++
+    }
+    recSquare.innerHTML += nearbyMines
+    if (nearbyMines == 0) {
+      //recursive function
+    }
+  } else if(recSquare.className == "sq mine") {
+    recSquare.className += " explode"
+  }
+  console.log(recSquare)
+}
+
